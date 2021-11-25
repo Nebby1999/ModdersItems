@@ -20,11 +20,9 @@ MonoBehaviour:
   skillDefs: []
   skillFamilies: []
   sceneDefs: []
-  itemDefs:
-  - {fileID: 11400000, guid: 6da57c477c172784e86640eb64e75e1f, type: 2}
+  itemDefs: []
   equipmentDefs: []
-  buffDefs:
-  - {fileID: 11400000, guid: 1e320c79419f4ef48b9c1e3f1494bb86, type: 2}
+  buffDefs: []
   eliteDefs: []
   unlockableDefs: []
   survivorDefs: []
