@@ -9,7 +9,7 @@ using System.Reflection;
 using UnityEngine;
 using Path = System.IO.Path;
 
-namespace ModdersItems.Modules
+namespace ModdersItems
 {
     public static class Assets
     {
@@ -48,7 +48,7 @@ namespace ModdersItems.Modules
                 mainContentPack = serialContentPack.CreateContentPack();
                 AddEffectDefs();
                 AddEntityStateTypes();
-                AddEntityStateConfigs();
+                //AddEntityStateConfigs();
                 ContentPackProvider.contentPack = mainContentPack;  
             }
         }
@@ -67,10 +67,7 @@ namespace ModdersItems.Modules
             }
             foreach (GameObject g in effects)
             {
-                EffectDef def = new EffectDef();
-                def.prefab = g;
-
-                effectDefs.Add(def);
+                effectDefs.Add(new EffectDef(g));
             }
 
             mainContentPack.effectDefs.Add(effectDefs.ToArray());
@@ -78,8 +75,15 @@ namespace ModdersItems.Modules
 
         internal static void AddEntityStateTypes()
         {
+            mainContentPack.entityStateTypes.Add(Assembly
+                                                         .GetExecutingAssembly()
+                                                         .GetTypes()
+                                                         .Where(type => type.IsSubclassOf(typeof(EntityState)))
+                                                         .ToArray());
+
+            /*
             mainContentPack.entityStateTypes.Add(((IEnumerable<System.Type>)Assembly.GetExecutingAssembly().GetTypes()).Where<System.Type>
-                ((Func<System.Type, bool>)(type => typeof(EntityState).IsAssignableFrom(type))).ToArray<System.Type>());
+                ((Func<System.Type, bool>)(type => typeof(EntityState).IsAssignableFrom(type))).ToArray<System.Type>());*/
 
             if (ModdersItemsPlugin.DEBUG)
             {
@@ -90,7 +94,8 @@ namespace ModdersItems.Modules
             }
         }
 
-        internal static void AddEntityStateConfigs()
+        //ESC can be easily added via the content pack editor window
+        /*internal static void AddEntityStateConfigs()
         {
             mainContentPack.entityStateConfigurations.Add(mainAssetBundle.LoadAllAssets<EntityStateConfiguration>());
 
@@ -101,7 +106,7 @@ namespace ModdersItems.Modules
                     Debug.LogWarning(ModdersItemsPlugin.MODNAME + ": Added EntityStateConfiguration: " + t);
                 }
             }
-        }
+        }*/
     }
 
     public class ContentPackProvider : IContentPackProvider
@@ -136,7 +141,7 @@ namespace ModdersItems.Modules
         {
             new Tokens.TokensModule().Init();
             new Pickups().Init();
-            new Buffs().Init();
+            new Buffs.Buffs().Init();
 
             args.ReportProgress(1f);
             yield break;

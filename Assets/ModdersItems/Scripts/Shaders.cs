@@ -2,7 +2,7 @@
 using UnityEngine;
 using StubbedConverter;
 
-namespace ModdersItems.Modules
+namespace ModdersItems
 {
     public static class Shaders
     {

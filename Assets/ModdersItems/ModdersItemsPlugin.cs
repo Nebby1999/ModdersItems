@@ -39,13 +39,14 @@ namespace ModdersItems
 
             instance = this;
             pluginInfo = Info;
+            MItemsLogger.logger = Logger;
 
             Modules.Config.Init();
-            Modules.Assets.Init();
+            Assets.Init();
             if (cancel) return;
-            Modules.Shaders.Init();
+            Shaders.Init();
 
-            Modules.ContentPackProvider.Init();
+            ContentPackProvider.Init();
         }
     }
 }
